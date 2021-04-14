@@ -7,4 +7,9 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'bankAccountApp';
+  isAuthenticated = false;
+  
+  async logout(): Promise<void> {
+    // todo
+  }
 }
