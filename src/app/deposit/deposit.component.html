@@ -6,7 +6,7 @@
         <form class="my-form" [formGroup]="form" (ngSubmit)="onSubmit()">
             <mat-form-field class="full-width">
                    <mat-label>Account Number</mat-label>
-                   <input  matInput  placeholder="Account Number"  formControlName="account"  required>
+                   <input  matInput  placeholder="Account Number"  formControlName="accountNumber"  required>
                 </mat-form-field>
                 <mat-form-field class="full-width">
                    <mat-label>Email</mat-label>
@@ -14,7 +14,7 @@
                 </mat-form-field>
                 <mat-form-field class="full-width">
                    <mat-label>Amount</mat-label>
-                   <input  matInput  placeholder="Amount" formControlName="amount">
+                   <input  matInput  placeholder="Amount" formControlName="value" required>
                 </mat-form-field>
                 <button mat-raised-button color="primary">DEPOSIT</button>
          </form>        

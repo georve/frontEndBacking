@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { TokenStorageService } from '../_services/token-storage.service';
 import { UserService } from '../_services/user.service';
 
@@ -12,14 +13,17 @@ export class WithdrawalComponent implements OnInit {
   currentUser: any;
   accountInfo:any;
   form: FormGroup;
+  public errorMessage = '';
+  public failWithdrawal=false;
 
   constructor(  private fb: FormBuilder,
                 private token: TokenStorageService,
-                private userService: UserService) { 
+                private userService: UserService,
+                private router: Router,) { 
                   this.form = this.fb.group({
-                    account: ['', Validators.required],
+                    accountNumber: ['', Validators.required],
                     email: ['', Validators.email],
-                    amount:['',Validators.required]
+                    value:['',Validators.required]
                   });
                 }
 
@@ -28,10 +32,13 @@ export class WithdrawalComponent implements OnInit {
     this.userService.getAccountInfoByEmail(this.currentUser.email).subscribe(
       data => {
        this.accountInfo=data;
-       this.form.controls.account.setValue(this.accountInfo.account);
+       this.failWithdrawal=false;
+       this.form.controls.accountNumber.setValue(this.accountInfo.account);
        this.form.controls.email.setValue(this.accountInfo.email);
       },
       err=>{
+        this.failWithdrawal=true;
+        this.errorMessage=err.error.message||"Error";
         console.log('fail');
         console.log(err);
 
@@ -39,7 +46,29 @@ export class WithdrawalComponent implements OnInit {
     )
   }
 
+  goHome(){
+    this.router.navigate(['/home']);
+  }
+
   onSubmit(): void {
+    if (this.form.valid) {
+      const aux: any = {
+        accountNumber: this.form.value.accountNumber,
+        email: this.form.value.email,
+        value: this.form.value.value
+      };
+      this.userService.withdrawal(aux).subscribe(
+        data => {
+          console.log(data);
+          this.goHome();
+         },
+         err=>{
+           console.log('fail');
+           console.log(err);
+   
+         }
+      )
+    }
 
   }
 

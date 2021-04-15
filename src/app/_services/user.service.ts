@@ -32,14 +32,14 @@ export class UserService {
   }
 
   deposit(account:DepositWithdra): Observable<any>{
-    return this.http.post(API_URL + 'deposit', {
-      account
-    }, httpOptions);
+    return this.http.post(API_URL + 'deposit', 
+    JSON.stringify(account),
+    httpOptions);
   }
 
   withdrawal(account:DepositWithdra): Observable<any>{
-    return this.http.post(API_URL + 'deposit', {
-      account
-    }, httpOptions);
+    return this.http.post(API_URL + 'withdrawal', 
+      JSON.stringify(account),
+      httpOptions);
   }
 }

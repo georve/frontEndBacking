@@ -21,6 +21,9 @@
                    <input  matInput  placeholder="Password"  formControlName="password">
                 </mat-form-field>
                 <button mat-raised-button color="primary">REGISTER</button>
+                <mat-error *ngIf="isSignUpFailed ">
+                  Signup failed!<br />{{ errorMessage }}
+                </mat-error>
          </form>        
     </mat-card-content>
 

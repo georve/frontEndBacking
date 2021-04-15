@@ -41,6 +41,11 @@ export class LoginComponent implements OnInit {
     }
   }
 
+  goHome(){
+    this.router.navigate(['/home']);
+  }
+
+
   onSubmit(): void {
     this.loginInvalid = false;
     this.formSubmitAttempt = false;
@@ -56,7 +61,7 @@ export class LoginComponent implements OnInit {
             this.loginInvalid=false;
             this.isLoggedIn=true;
             this.roles = this.tokenStorage.getUser().roles;
-            this.reloadPage();
+            this.goHome();
           },
           err=>{
             console.log('fail');
