@@ -8,7 +8,7 @@ import  { WithdrawalComponent} from './withdrawal/withdrawal.component';
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'home',
     component: HomeComponent
   },
   {

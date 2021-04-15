@@ -1,1 +1,23 @@
-<p>deposit works!</p>
+<mat-toolbar>
+    <span>Deposit</span>
+ </mat-toolbar>
+ <mat-card class="my-card">
+    <mat-card-content>
+        <form class="my-form" [formGroup]="form" (ngSubmit)="onSubmit()">
+            <mat-form-field class="full-width">
+                   <mat-label>Account Number</mat-label>
+                   <input  matInput  placeholder="Account Number"  formControlName="accountNumber"  required>
+                </mat-form-field>
+                <mat-form-field class="full-width">
+                   <mat-label>Email</mat-label>
+                   <input  matInput  placeholder="Email" formControlName="email"  required>
+                </mat-form-field>
+                <mat-form-field class="full-width">
+                   <mat-label>Amount</mat-label>
+                   <input  matInput  placeholder="Amount" formControlName="value" required>
+                </mat-form-field>
+                <button mat-raised-button color="primary">DEPOSIT</button>
+         </form>        
+    </mat-card-content>
+
+ </mat-card>

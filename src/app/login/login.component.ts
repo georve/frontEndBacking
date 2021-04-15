@@ -25,10 +25,10 @@ export class LoginComponent implements OnInit {
     private authService: AuthService,
     private tokenStorage: TokenStorageService,
   ) {
-    this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/game';
+    this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/home';
 
     this.form = this.fb.group({
-      username: ['', Validators.email],
+      username: ['', Validators.required],
       password: ['', Validators.required]
     });
   }
@@ -41,6 +41,11 @@ export class LoginComponent implements OnInit {
     }
   }
 
+  goHome(){
+    this.router.navigate(['/home']);
+  }
+
+
   onSubmit(): void {
     this.loginInvalid = false;
     this.formSubmitAttempt = false;
@@ -50,14 +55,16 @@ export class LoginComponent implements OnInit {
         const password = this.form.get('password')?.value;
         this.authService.login(username, password).subscribe(
           data=>{
+            console.log('login');
             this.tokenStorage.saveToken(data.accessToken);
             this.tokenStorage.saveUser(data);
             this.loginInvalid=false;
             this.isLoggedIn=true;
             this.roles = this.tokenStorage.getUser().roles;
-            this.reloadPage();
+            this.goHome();
           },
           err=>{
+            console.log('fail');
             this.errorMessage = err.error.message;
             this.loginInvalid = true;
           }
