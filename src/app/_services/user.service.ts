@@ -3,8 +3,12 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { BankAccount } from '../model/BankAccount.model';
 import { DepositWithdra } from '../model/DepositWithdra.model';
+import { EmailPayload } from '../model/EmailPayload.model';
+import { environment } from 'src/environments/environment';
 
-const API_URL = 'http://localhost:8080/api/bankAccount/';
+const baseUrl = environment.baseUrl;
+
+const API_URL = baseUrl+'/bankAccount/';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -21,8 +25,10 @@ export class UserService {
     return this.http.get(API_URL + 'get/' +accountNumber);
   }
 
-  getAccountInfoByEmail(email:string): Observable<any> {
-    return this.http.get(API_URL + 'getByEmail/' +email);
+  getAccountInfoByEmail(email:EmailPayload): Observable<any> {
+    return this.http.post(API_URL + 'getByEmail',
+    JSON.stringify(email),
+    httpOptions);
   }
 
   createAccount(account:BankAccount): Observable<any>{

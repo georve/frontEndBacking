@@ -13,6 +13,7 @@ export class DepositComponent implements OnInit {
   form: FormGroup;
   currentUser: any;
   accountInfo: any;
+  emailObject: any;
 
   constructor(private fb: FormBuilder,
     private token: TokenStorageService,
@@ -26,8 +27,10 @@ export class DepositComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.emailObject={}
     this.currentUser = this.token.getUser();
-    this.userService.getAccountInfoByEmail(this.currentUser.email).subscribe(
+    this.emailObject.email=this.currentUser.email;
+    this.userService.getAccountInfoByEmail(this.emailObject).subscribe(
       data => {
         this.accountInfo = data;
         this.form.controls.accountNumber.setValue(this.accountInfo.account);

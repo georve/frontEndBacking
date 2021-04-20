@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { EmailPayload } from '../model/EmailPayload.model';
 import { TokenStorageService } from '../_services/token-storage.service';
 import { UserService } from '../_services/user.service';
 
@@ -10,15 +11,22 @@ import { UserService } from '../_services/user.service';
 export class HomeComponent implements OnInit {
   currentUser: any;
   accountInfo: any;
+  emailObject: any;
   public failAccount=false;
   public errorMessage = '';
 
   constructor(private token: TokenStorageService,
-    private userService: UserService,) { }
+    private userService: UserService,) { 
+      
+    }
 
   ngOnInit(): void {
+    console.log("init");
+    this.emailObject={};
     this.currentUser = this.token.getUser();
-    this.userService.getAccountInfoByEmail(this.currentUser.email).subscribe(
+    console.log(this.currentUser);
+    this.emailObject.email=this.currentUser.email;
+    this.userService.getAccountInfoByEmail(this.emailObject).subscribe(
       data => {
         console.log(data);
        this.accountInfo=data;

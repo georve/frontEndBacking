@@ -13,6 +13,7 @@ export class WithdrawalComponent implements OnInit {
   currentUser: any;
   accountInfo:any;
   form: FormGroup;
+  emailObject: any;
   public errorMessage = '';
   public failWithdrawal=false;
 
@@ -28,8 +29,10 @@ export class WithdrawalComponent implements OnInit {
                 }
 
   ngOnInit(): void {
+    this.emailObject={}
     this.currentUser = this.token.getUser();
-    this.userService.getAccountInfoByEmail(this.currentUser.email).subscribe(
+    this.emailObject.email=this.currentUser.email;
+    this.userService.getAccountInfoByEmail(this.emailObject).subscribe(
       data => {
        this.accountInfo=data;
        this.failWithdrawal=false;
@@ -39,8 +42,6 @@ export class WithdrawalComponent implements OnInit {
       err=>{
         this.failWithdrawal=true;
         this.errorMessage=err.error.message||"Error";
-        console.log('fail');
-        console.log(err);
 
       }
     )
@@ -59,12 +60,14 @@ export class WithdrawalComponent implements OnInit {
       };
       this.userService.withdrawal(aux).subscribe(
         data => {
+          this.failWithdrawal=false;
           console.log(data);
           this.goHome();
          },
          err=>{
+          this.failWithdrawal=true;
            console.log('fail');
-           console.log(err);
+           this.errorMessage=err.error.message||"Error";
    
          }
       )
